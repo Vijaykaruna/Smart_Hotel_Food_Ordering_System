@@ -11,6 +11,9 @@ const GuestModel = require("./src/Guest.js");
 const ReviewModel = require('./src/Review.js');
 const OrderListModel = require("./src/OrderLists.js");
 const ProfileModel = require('./src/Profile.js');
+const dotenv = require("dotenv");
+
+
 
 const app = express();
 const salt = bcrypt.genSaltSync(10);
@@ -25,8 +28,9 @@ app.use(
 );
 app.use(cookieParser());
 
-mongoose.connect('mongodb+srv://vijaykarunanithi2003:qDzooMjm0hW3vznl@cluster0.awfmc6k.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0');
+dotenv.config();
 
+mongoose.connect(process.env.MONGO_URI);
 app.listen(5000, () => {
     console.log("server running in  port 5000");
 });

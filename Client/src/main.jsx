@@ -7,9 +7,11 @@ import { ToastProvider } from "./service/ToastProvider.jsx";
 import { LoadingProvider } from "./service/LoadingProvider.jsx";
 
 createRoot(document.getElementById("root")).render(
-  <ToastProvider>
-    <LoadingProvider>
-      <App />
-    </LoadingProvider>
-  </ToastProvider>
+  <StrictMode>
+    <ToastProvider>
+      <LoadingProvider>
+        <App />
+      </LoadingProvider>
+    </ToastProvider>
+  </StrictMode>,
 );

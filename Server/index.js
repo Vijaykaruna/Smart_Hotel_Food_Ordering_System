@@ -20,8 +20,7 @@ app.use(cookieParser());
 
 app.use(
   cors({
-    // origin: process.env.CLIENT_URL,
-    origin: "https://smart-hotel-food-ordering-system-1.onrender.com",
+    origin: process.env.CLIENT_URL,
     credentials: true,
   }),
 );

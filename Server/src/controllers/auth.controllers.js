@@ -55,17 +55,15 @@ export const login = async (req, res) => {
     (err, token) => {
       if (err) throw err;
       res
-        // .cookie("token", token, {
-        //   httpOnly: true,
-        //   secure: true,
-        //   sameSite: "none",
-        //   domain: ".onrender.com", // ⭐ THIS IS THE KEY
-        //   maxAge: 7 * 24 * 60 * 60 * 1000, // optional (7 days)
-        // })
+        .cookie("token", token, {
+          httpOnly: true,
+          secure: true,
+          sameSite: "none",
+          domain: ".onrender.com",
+        })
         .status(200)
         .json({
           message: "Login successful",
-          token,
           user: {
             id: UserDetails._id,
             name: UserDetails.name,
@@ -77,31 +75,15 @@ export const login = async (req, res) => {
   );
 };
 
-// export const profile = (req, res) => {
-//   const token = req.cookies.token;
-
-//   if (!token) {
-//     return res.status(401).json({ message: "No token" });
-//   }
-
-//   jwt.verify(token, process.env.JWT_SECRET, (err, info) => {
-//     if (err) return res.status(401).json({ message: "Invalid token" });
-//     res.json(info);
-//   });
-// };
-
 export const profile = (req, res) => {
-  const authHeader = req.headers.authorization;
+  const token = req.cookies.token;
 
-  if (!authHeader) {
+  if (!token) {
     return res.status(401).json({ message: "No token" });
   }
 
-  const token = authHeader.split(" ")[1];
-
   jwt.verify(token, process.env.JWT_SECRET, (err, info) => {
     if (err) return res.status(401).json({ message: "Invalid token" });
-
     res.json(info);
   });
 };

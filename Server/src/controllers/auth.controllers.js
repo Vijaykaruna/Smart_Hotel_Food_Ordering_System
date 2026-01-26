@@ -60,6 +60,7 @@ export const login = async (req, res) => {
           httpOnly: true,
           secure: true,
           sameSite: "none",
+          domain: ".onrender.com",
         })
         .status(200)
         .json({
@@ -71,7 +72,7 @@ export const login = async (req, res) => {
             isAdmin: UserDetails.isAdmin,
           },
         });
-    }
+    },
   );
 };
 
@@ -93,7 +94,7 @@ export const logout = (req, res) => {
     httpOnly: true,
     secure: true,
     sameSite: "none",
+    domain: ".onrender.com",
   });
-
   res.status(200).json({ message: "Logged out" });
 };

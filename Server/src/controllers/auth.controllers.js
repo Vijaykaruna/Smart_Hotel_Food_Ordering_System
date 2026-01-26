@@ -33,43 +33,46 @@ export const login = async (req, res) => {
 
   const UserDetails = await UserModel.findOne({ email });
 
-  if (UserDetails) {
-    const pass = bcrypt.compareSync(password, UserDetails.password);
-
-    if (pass) {
-      jwt.sign(
-        {
-          email,
-          name: UserDetails.name,
-          id: UserDetails._id,
-          isAdmin: UserDetails.isAdmin,
-        },
-        process.env.JWT_SECRET,
-        {},
-        (err, token) => {
-          if (err) throw err;
-          res;
-          cookie("token", token, {
-            httpOnly: true,
-            secure: true, // required on HTTPS
-            sameSite: "none", // required for cross-site
-          }).json({
-            message: "Login successful",
-            user: {
-              id: UserDetails._id,
-              name: UserDetails.name,
-              email: UserDetails.email,
-              isAdmin: UserDetails.isAdmin,
-            },
-          });
-        },
-      );
-    } else {
-      return res.status(400).json({ message: "Incorrect password" });
-    }
-  } else {
+  if (!UserDetails) {
     return res.status(400).json({ message: "Email not found" });
   }
+
+  const pass = bcrypt.compareSync(password, UserDetails.password);
+
+  if (!pass) {
+    return res.status(400).json({ message: "Incorrect password" });
+  }
+
+  jwt.sign(
+    {
+      email,
+      name: UserDetails.name,
+      id: UserDetails._id,
+      isAdmin: UserDetails.isAdmin,
+    },
+    process.env.JWT_SECRET,
+    {},
+    (err, token) => {
+      if (err) throw err;
+
+      res
+        .cookie("token", token, {
+          httpOnly: true,
+          secure: true,
+          sameSite: "none",
+        })
+        .status(200)
+        .json({
+          message: "Login successful",
+          user: {
+            id: UserDetails._id,
+            name: UserDetails.name,
+            email: UserDetails.email,
+            isAdmin: UserDetails.isAdmin,
+          },
+        });
+    }
+  );
 };
 
 export const profile = (req, res) => {
@@ -88,7 +91,9 @@ export const profile = (req, res) => {
 export const logout = (req, res) => {
   res.clearCookie("token", {
     httpOnly: true,
-    sameSite: "lax",
+    secure: true,
+    sameSite: "none",
   });
+
   res.status(200).json({ message: "Logged out" });
 };

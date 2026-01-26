@@ -12,7 +12,6 @@ export const authController = ({ triggerToast } = {}) => {
     try {
       const res = await api.post("/auth/login", { email, password });
       if (res.status === 200) {
-        console.log(res.data.token);
         localStorage.setItem("token", res.data.token);
         triggerToast({
           type: "success",

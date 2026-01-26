@@ -9,6 +9,7 @@ import guestRoutes from "./src/routes/guest.routes.js";
 import orderRoutes from "./src/routes/order.routes.js";
 import reviewRoutes from "./src/routes/review.routes.js";
 import { connectDB } from "./src/lib/db.js";
+import path from "path";
 
 dotenv.config();
 
@@ -41,3 +42,16 @@ connectDB()
   .catch((err) => {
     console.log(`Server error `, err);
   });
+
+
+// For ES Module
+const __dirname = path.resolve();
+
+// Serve frontend build
+app.use(express.static(path.join(__dirname, "dist")));
+
+// React Router fallback (IMPORTANT)
+app.use((req, res) => {
+  res.sendFile(path.join(__dirname, "dist", "index.html"));
+});
+

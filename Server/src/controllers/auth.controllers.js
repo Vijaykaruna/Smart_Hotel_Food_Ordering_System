@@ -54,36 +54,62 @@ export const login = async (req, res) => {
     {},
     (err, token) => {
       if (err) throw err;
-      res
-        .cookie("token", token, {
-          httpOnly: true,
-          secure: true,
-          sameSite: "none",
-          domain: ".onrender.com",
-        })
-        .status(200)
-        .json({
-          message: "Login successful",
-          user: {
-            id: UserDetails._id,
-            name: UserDetails.name,
-            email: UserDetails.email,
-            isAdmin: UserDetails.isAdmin,
-          },
-        });
+      // res
+      //   .cookie("token", token, {
+      //     httpOnly: true,
+      //     secure: true,
+      //     sameSite: "none",
+      //     domain: ".onrender.com",
+      //   })
+      //   .status(200)
+      //   .json({
+      //     message: "Login successful",
+      //     token,
+      //     user: {
+      //       id: UserDetails._id,
+      //       name: UserDetails.name,
+      //       email: UserDetails.email,
+      //       isAdmin: UserDetails.isAdmin,
+      //     },
+      //   });
+      res.status(200).json({
+        message: "Login successful",
+        token,
+        user: {
+          id: UserDetails._id,
+          name: UserDetails.name,
+          email: UserDetails.email,
+          isAdmin: UserDetails.isAdmin,
+        },
+      });
     },
   );
 };
 
-export const profile = (req, res) => {
-  const token = req.cookies.token;
+// export const profile = (req, res) => {
+//   const token = req.cookies.token;
 
-  if (!token) {
+//   if (!token) {
+//     return res.status(401).json({ message: "No token" });
+//   }
+
+//   jwt.verify(token, process.env.JWT_SECRET, (err, info) => {
+//     if (err) return res.status(401).json({ message: "Invalid token" });
+//     res.json(info);
+//   });
+// };
+export const profile = (req, res) => {
+  const authHeader = req.headers.authorization;
+
+  if (!authHeader) {
     return res.status(401).json({ message: "No token" });
   }
 
+  const token = authHeader.split(" ")[1];
+
   jwt.verify(token, process.env.JWT_SECRET, (err, info) => {
     if (err) return res.status(401).json({ message: "Invalid token" });
+
     res.json(info);
   });
 };

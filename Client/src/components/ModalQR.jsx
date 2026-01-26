@@ -10,7 +10,7 @@ const QRModal = ({ useMain }) => {
       </Modal.Header>
       <Modal.Body className="text-center">
         <QRCodeCanvas className="p-2 border border-2"
-          value={useMain.link}
+          value={Main.link}
           size={200}
         />
       </Modal.Body>

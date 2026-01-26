@@ -59,7 +59,7 @@ export const publicGuestController = () => {
       const res = await guestApi.post("/guest/addReport", {repoterRoom, reporterName, report});
       return res.data;
     } catch (error) {
-      console.log(err);
+      console.log(error);
     }
   };
 

@@ -61,19 +61,25 @@ export const useGuest = (userId) => {
   };
 
   const fetchGetOrderDetails = async (guestId) => {
-    const orderList = await guestControl.getGuestOrdersList(guestId, userId); 
+    const orderList = await guestControl.getGuestOrdersList(guestId, userId);
     setGuestOrderList(orderList);
   };
 
   const handleGuestReport = async (repoterRoom, reporterName, report) => {
-    const res =  await guestControl.addGuestReport(repoterRoom, reporterName, report);
+    const res = await guestControl.addGuestReport(
+      repoterRoom,
+      reporterName,
+      report,
+    );
     setShowReportModal(false);
-  }
+  };
 
   useEffect(() => {
+    if (!userId) return;
+
     fetchGetFoods();
     fetchHotelDetails();
-  }, []);
+  }, [userId]);
 
   const getActiveFoods = (activeCategory) => {
     switch (activeCategory) {
@@ -221,10 +227,12 @@ export const useGuest = (userId) => {
     fetchGetOrderDetails(guestDetails._id);
   };
 
-  const handlefetchOrderList = async() => {
+  const handlefetchOrderList = async () => {
+    if (!guestDetails) return;
+
     await fetchGetOrderDetails(guestDetails._id);
     setNavigateOrderListPage(true);
-  }
+  };
 
   return {
     category,
@@ -241,7 +249,7 @@ export const useGuest = (userId) => {
     showAlertmentModal,
     guestOrderList,
     navigateOrderListPage,
-    showReportModal, 
+    showReportModal,
     setShowReportModal,
     setNavigateOrderListPage,
     setShowAlertmentModal,

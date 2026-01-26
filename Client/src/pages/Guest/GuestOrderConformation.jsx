@@ -1,6 +1,6 @@
 import Dosa from "../../assets/dosa.png";
 import logo from "../../assets/logo.png";
-import GuestAlertmentModal from "../../components/GuestAlertmentModal";
+import GuestAlertmentModal from "../../components/GuestAlertmentModal.jsx";
 
 const GuestOrderConformation = ({ guest }) => {
   const handleGoBack = () => {

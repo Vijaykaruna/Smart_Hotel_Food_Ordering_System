@@ -76,7 +76,6 @@ export const guestController = ({ triggerToast }) => {
   };
 
   const addnewGuest = async (guestDetails) => {
-    console.log(guestDetails);
     showLoading("Adding new Guest...");
     try {
       const res = await api.post("/guest/addGuest", {

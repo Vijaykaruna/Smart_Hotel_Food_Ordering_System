@@ -2,8 +2,7 @@ import Modal from "react-bootstrap/Modal";
 import { QRCodeCanvas } from "qrcode.react";
 
 const QRModal = ({ useMain }) => {
-    const Main = useMain;
-        
+    const Main = useMain; 
   return (
     <Modal show={Main.showQR} centered onHide={() => Main.setShowQR(false)}>
       <Modal.Header closeButton>

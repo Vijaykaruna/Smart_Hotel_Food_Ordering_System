@@ -45,12 +45,12 @@ export const useMainPage = ({ useAuthentication }) => {
 
   const getQRCode = () => {
     showLoading("Creating QR code...");
-    console.log("User ID: ", user._id);
+    console.log("User ID: ", user.id);
     setTimeout(() => {
-      const url = `${import.meta.env.VITE_SERVER_URL}/guest/${user._id}`;
+      const url = `${import.meta.env.VITE_SERVER_URL}/guest/${user.id}`;
       setLink(url);
       hideLoading();
-    }, 2000);
+    }, 1500);
   }
 
   return {

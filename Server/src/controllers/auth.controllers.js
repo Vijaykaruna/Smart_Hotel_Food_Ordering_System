@@ -60,7 +60,8 @@ export const login = async (req, res) => {
           httpOnly: true,
           secure: true,
           sameSite: "none",
-          domain: ".onrender.com",
+          domain: ".onrender.com", // ⭐ THIS IS THE KEY
+          maxAge: 7 * 24 * 60 * 60 * 1000, // optional (7 days)
         })
         .status(200)
         .json({

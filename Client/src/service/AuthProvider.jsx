@@ -7,17 +7,18 @@ export const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(null);
   const [authorized, setAuthorized] = useState(null);
 
+  const checkAuth = async () => {
+    try {
+      const res = await api.get("/auth/profile");
+      setUser(res.data);
+      setAuthorized(true);
+    } catch {
+      setUser(null);
+      setAuthorized(false);
+    }
+  };
+
   useEffect(() => {
-    const checkAuth = async () => {
-      try {
-        const res = await api.get("/auth/profile");
-        setUser(res.data);
-        setAuthorized(true);
-      } catch {
-        setUser(null);
-        setAuthorized(false);
-      }
-    };
     checkAuth();
   }, []);
 

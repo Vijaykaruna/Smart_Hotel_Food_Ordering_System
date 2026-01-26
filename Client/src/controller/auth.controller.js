@@ -1,5 +1,6 @@
 import { api } from "../api/axios.js";
 import { useNavigation } from "../hooks/useNavigation.js";
+import { useAuth } from "../service/AuthProvider.jsx";
 import { useLoading } from "../service/LoadingProvider.jsx";
 
 export const authController = ({ triggerToast } = {}) => {
@@ -7,15 +8,22 @@ export const authController = ({ triggerToast } = {}) => {
 
   const { showLoading, hideLoading } = useLoading();
 
+  const { checkAuth } = useAuth();
+
   const login = async ({ email, password }) => {
     showLoading("Logging in...");
     try {
       const res = await api.post("/auth/login", { email, password });
       if (res.status === 200) {
+        localStorage.setItem("token", res.data.token);
+
+        await checkAuth();
+
         triggerToast({
           type: "success",
           message: res.data.message || "Logged in Successfully",
         });
+
         navigateToMain();
       }
     } catch (err) {

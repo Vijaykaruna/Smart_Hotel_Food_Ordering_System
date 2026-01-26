@@ -10,30 +10,59 @@ import SignUp from "./pages/Authentication/SignUp.jsx";
 import MainPage from "./pages/MainPage/MainPage.jsx";
 import Guest from "./pages/Guest/Guest.jsx";
 
+// function App() {
+//   return (
+//     <BrowserRouter>
+//       <Routes>
+//         {/* PUBLIC ROUTES */}
+//         <Route path="/" element={<HomePage />} />
+//         <Route path="/login" element={<LogIn />} />
+//         <Route path="/signup" element={<SignUp />} />
+//         <Route path="/guest/:userId" element={<Guest />} />
+
+//         {/* PROTECTED ROUTES */}
+//         <Route
+//           path="/main"
+//           element={
+//             <AuthProvider>
+//               <ProtectedRoute>
+//                 <MainPage/>
+//               </ProtectedRoute>
+//             </AuthProvider>
+//           }
+//           />
+//       </Routes>
+//     </BrowserRouter>
+//   );
+// }
+
 function App() {
   return (
     <BrowserRouter>
-      <Routes>
-        {/* PUBLIC ROUTES */}
-        <Route path="/" element={<HomePage />} />
-        <Route path="/login" element={<LogIn />} />
-        <Route path="/signup" element={<SignUp />} />
-        <Route path="/guest/:userId" element={<Guest />} />
+      <AuthProvider>   {/* ✅ Wrap everything */}
+        <Routes>
 
-        {/* PROTECTED ROUTES */}
-        <Route
-          path="/main"
-          element={
-            <AuthProvider>
+          {/* PUBLIC ROUTES */}
+          <Route path="/" element={<HomePage />} />
+          <Route path="/login" element={<LogIn />} />
+          <Route path="/signup" element={<SignUp />} />
+          <Route path="/guest/:userId" element={<Guest />} />
+
+          {/* PROTECTED */}
+          <Route
+            path="/main"
+            element={
               <ProtectedRoute>
-                <MainPage/>
+                <MainPage />
               </ProtectedRoute>
-            </AuthProvider>
-          }
+            }
           />
-      </Routes>
+
+        </Routes>
+      </AuthProvider>
     </BrowserRouter>
   );
 }
+
 
 export default App;

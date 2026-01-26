@@ -2,7 +2,7 @@ import { CiEdit } from "react-icons/ci";
 
 import { useEffect } from "react";
 
-import ModalRoom from "../../components/Modal.room.jsx";
+import ModalRoom from "../../components/Modal.Room.jsx";
 import ModalTable from "../../components/ModalTable.jsx";
 
 import { useDashboard } from "../../hooks/useDashboard.js";

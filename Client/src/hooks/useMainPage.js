@@ -46,7 +46,7 @@ export const useMainPage = ({ useAuthentication }) => {
   const getQRCode = () => {
     showLoading("Creating QR code...");
     setTimeout(() => {
-      const url = `http://localhost:5173/guest/:userId`;
+      const url = `${import.meta.env.VITE_SERVER_URL}/guest/:userId`;
       setLink(url);
       hideLoading();
     }, 2000);

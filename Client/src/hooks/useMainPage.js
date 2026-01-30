@@ -10,10 +10,9 @@ import { useState } from "react";
 import { useLoading } from "../service/LoadingProvider";
 
 export const useMainPage = ({ useAuthentication }) => {
-
   const { user, setUser, setAuthorized } = useAuthentication;
 
-    const { showLoading, hideLoading } = useLoading();
+  const { showLoading, hideLoading } = useLoading();
 
   const menuItems = [
     { href: "#dashboard", img: dash, label: "Dashboard" },
@@ -46,12 +45,11 @@ export const useMainPage = ({ useAuthentication }) => {
   const getQRCode = () => {
     showLoading("Creating QR code...");
     setTimeout(() => {
-    //  const url = `${window.location.origin}/guest/home/${user.id}`;
-    const url = `https://smart-hotel-food-ordering-system-1.onrender.com/guest/home/${user.id}`;
+      const url = `${import.meta.env.VITE_CLIENT_URL}/guest/home/${user.id}`;
       setLink(url);
       hideLoading();
     }, 1500);
-  }
+  };
 
   return {
     initial,

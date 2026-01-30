@@ -47,7 +47,7 @@ export const useMainPage = ({ useAuthentication }) => {
     showLoading("Creating QR code...");
     setTimeout(() => {
     //  const url = `${window.location.origin}/guest/home/${user.id}`;
-    const url = `${import.meta.env.VITE_SERVER_URL}/guest/home/${user.id}`;
+    const url = `https://smart-hotel-food-ordering-system-1.onrender.com/guest/home/${user.id}`;
       setLink(url);
       hideLoading();
     }, 1500);

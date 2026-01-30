@@ -46,7 +46,8 @@ export const useMainPage = ({ useAuthentication }) => {
   const getQRCode = () => {
     showLoading("Creating QR code...");
     setTimeout(() => {
-     const url = `${window.location.origin}/guest/home/${user.id}`;
+    //  const url = `${window.location.origin}/guest/home/${user.id}`;
+    const url = `${import.meta.env.VITE_SERVER_URL}/guest/home/${user.id}`;
       setLink(url);
       hideLoading();
     }, 1500);

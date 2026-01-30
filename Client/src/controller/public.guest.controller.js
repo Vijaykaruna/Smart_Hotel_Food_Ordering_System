@@ -1,7 +1,7 @@
 import { guestApi } from "../api/axios.js";
 
-export const publicGuestController = () => {
-  const getHotelByUser = async (userId) => {
+export const publicGuestController = (userId) => {
+  const getHotelByUser = async () => {
     try {
       const res = await guestApi.get(`/guest/hotel/${userId}`);
       return res.data;
@@ -10,7 +10,7 @@ export const publicGuestController = () => {
     }
   };
 
-  const getGuestDetailsByUser = async (mobile, roomNumber, userId) => {
+  const getGuestDetailsByUser = async (mobile, roomNumber) => {
     try {
       const res = await guestApi.post(`/guest/guest/${userId}`, {
         mobile,
@@ -24,7 +24,7 @@ export const publicGuestController = () => {
     }
   };
 
-  const getFoodsByUser = async (userId) => {
+  const getFoodsByUser = async () => {
     try {
       const res = await guestApi.get(`/guest/foods/${userId}`);
       return res.data;
@@ -42,7 +42,7 @@ export const publicGuestController = () => {
     }
   };
 
-  const getGuestOrdersList = async (guestId, userId) => {
+  const getGuestOrdersList = async (guestId) => {
     try {
       const res = await guestApi.get(`/guest/order/list/${guestId}`, {
         params: { userId },

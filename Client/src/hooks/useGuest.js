@@ -1,8 +1,8 @@
 import { useEffect, useState } from "react";
-import { publicGuestController } from "../controller/public.guest.controller";
+import { publicGuestController } from "../controller/public.guest.controller.js";
 
 export const useGuest = (userId) => {
-  const guestControl = publicGuestController();
+  const guestControl = publicGuestController(userId);
 
   const [listCategory, setListCategory] = useState({
     breakFast: [],
@@ -28,7 +28,7 @@ export const useGuest = (userId) => {
   ];
 
   const fetchGetFoods = async () => {
-    const foodList = await guestControl.getFoodsByUser(userId);
+    const foodList = await guestControl.getFoodsByUser();
 
     const breakFast = foodList.filter((food) => food.category === "BreakFast");
     const lunch = foodList.filter((food) => food.category === "Lunch");
@@ -53,15 +53,14 @@ export const useGuest = (userId) => {
   const fetchGuestDetails = async (mobile, roomNumber) => {
     const guest = await guestControl.getGuestDetailsByUser(
       mobile,
-      roomNumber,
-      userId,
+      roomNumber
     );
     setGuestDetails(guest);
     return guest;
   };
 
   const fetchGetOrderDetails = async (guestId) => {
-    const orderList = await guestControl.getGuestOrdersList(guestId, userId);
+    const orderList = await guestControl.getGuestOrdersList(guestId);
     setGuestOrderList(orderList);
   };
 

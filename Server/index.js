@@ -2,6 +2,7 @@ import express from "express";
 import dotenv from "dotenv";
 import cookieParser from "cookie-parser";
 import cors from "cors";
+import path from "path";
 
 import hotelRoutes from "./src/routes/hotel.routes.js";
 import authRouter from "./src/routes/auth.routes.js";
@@ -15,6 +16,8 @@ dotenv.config();
 
 const app = express();
 const PORT = process.env.PORT;
+
+const __dirname = path.resolve();
 
 app.use(express.json());
 app.use(cookieParser());
@@ -32,6 +35,14 @@ app.use("/order", orderRoutes);
 app.use("/hotel", hotelRoutes);
 app.use("/guest", guestRoutes);
 app.use("/review", reviewRoutes);
+
+app.use(express.static(path.join(__dirname, "Client", "dist")));
+
+app.get("*", (req, res) => {
+  res.sendFile(
+    path.join(__dirname, "Client", "dist", "index.html")
+  );
+});
 
 connectDB()
   .then(() => {

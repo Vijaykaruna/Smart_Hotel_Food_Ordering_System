@@ -27,7 +27,6 @@ app.use(
   })
 );
 
-// API Routes
 app.use("/auth", authRouter);
 app.use("/food", foodRouter);
 app.use("/order", orderRoutes);
@@ -57,4 +56,3 @@ connectDB()
   .catch((err) => {
     console.log(`Server error `, err);
   });
-
